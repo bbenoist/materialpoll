@@ -1,2 +1,3 @@
 * text=auto
 *.sh eol=lf
+client/angular.conf eol=lf
