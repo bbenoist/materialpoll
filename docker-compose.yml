@@ -1,8 +1,7 @@
 version: '3.2'
 
 networks:
-  db: {}
-  client: {}
+  materialpoll: {}
 
 volumes:
   db: {}
@@ -14,7 +13,7 @@ services:
     expose:
       - 27017
     networks:
-      db:
+      materialpoll:
         aliases:
           - db
     volumes:
@@ -28,10 +27,7 @@ services:
     environment:
       - MONGO_URL=mongodb://db:27017/materialpoll
     networks:
-      db:
-        aliases:
-          - server
-      client:
+      materialpoll:
         aliases:
           - server
 
@@ -42,6 +38,6 @@ services:
     ports:
       - "8080:8080"
     networks:
-      client:
+      materialpoll:
         aliases:
           - client
