@@ -47,7 +47,7 @@ angular.module('materialPollApp')
         legendTemplate : '<ul class=\'<%=name.toLowerCase()%>-legend\'><% for (var i=0; i<segments.length; i++){%><li><span style=\'background-color:<%=segments[i].fillColor%>\'></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>'
       });
       //setup socket connection for realtime connection to poll
-      var socket = io.connect('http://45.55.31.147:9090', {'sync disconnect on unload':true});
+      var socket = io.connect('http://server:9090', {'sync disconnect on unload':true});
       socket.on('chat' + $stateParams.id, function(dat){
         var socketvotes = 0;
         $.each(dat.votes,function() {

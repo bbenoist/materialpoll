@@ -1,0 +1,47 @@
+version: '3.2'
+
+networks:
+  db: {}
+  client: {}
+
+volumes:
+  db: {}
+  db_dump: {}
+
+services:
+  db:
+    image: mongo:3.4.6
+    expose:
+      - 27017
+    networks:
+      db:
+        aliases:
+          - db
+    volumes:
+      - db:/data/db
+      - db_dump:/dump
+
+  server:
+    image: nearbycoder/materialpoll_server
+    build:
+      context: ./server
+    environment:
+      - MONGO_URL=mongodb://db:27017/materialpoll
+    networks:
+      db:
+        aliases:
+          - server
+      client:
+        aliases:
+          - server
+
+  client:
+    image: nearbycoder/materialpoll_client
+    build:
+      context: ./client
+    ports:
+      - "8080:8080"
+    networks:
+      client:
+        aliases:
+          - client
