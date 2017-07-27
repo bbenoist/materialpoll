@@ -24,6 +24,10 @@ services:
     image: nearbycoder/materialpoll_server
     build:
       context: ./server
+    expose:
+      - 9090
+    ports:
+      - "9090:9090"
     environment:
       - MONGO_URL=mongodb://db:27017/materialpoll
     networks:
@@ -35,6 +39,8 @@ services:
     image: nearbycoder/materialpoll_client
     build:
       context: ./client
+    expose:
+      - 8080
     ports:
       - "8080:8080"
     networks:
