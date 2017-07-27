@@ -12,7 +12,8 @@ angular.module('materialPollApp')
     $scope.options = [];
     $scope.options.votes = [];
   	$http.get(myConfig.backend + $stateParams.id)
-    .success(function(data){
+    .then(function(response){
+      var data = response.data;
       $scope.title = data.name;
       $scope.multiple = data.multiple || false;
       var totalvotes = 0;

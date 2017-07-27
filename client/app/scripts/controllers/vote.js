@@ -10,7 +10,8 @@
 angular.module('materialPollApp')
   .controller('VoteCtrl', function ($scope, $state,$stateParams, $http, myConfig) {
   	$http.get(myConfig.backend + $stateParams.id)
-  	.success(function(data){
+  	.then(function(response){
+      var data = response.data;
   		$scope.title = data.name;
   		$scope.multiple = data.multiple || false;
   		$scope.options = [];
@@ -35,7 +36,7 @@ angular.module('materialPollApp')
   			});
         if(checked === true){
           $http.put(myConfig.backend + $stateParams.id,{votes : votes})
-          .success(function(){
+          .then(function(){
             $state.go('/:id/v',{id: $stateParams.id});
           });
         }
