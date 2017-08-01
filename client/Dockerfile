@@ -22,14 +22,20 @@ RUN npm install
 # RUN npm install phantomjs jasmine-core jasmine karma grunt-karma grunt-contrib-compass
 
 ADD bower.json /src
-RUN $(npm bin)/bower install --allow-root
+
+RUN apt-get update -y \
+ && apt-get install -y git \
+ && git config --global http.proxy $HTTP_PROXY \
+ && git config --global https.proxy $HTTPS_PROXY \
+ && $(npm bin)/bower install --allow-root \
+ && apt-get autoremove -y git \
+ && rm -rf /var/lib/apt/lists/*
 
 RUN npm install -g grunt
 RUN apt-get update -y \
- && apt-get install -y git ruby-full build-essential \
- && git config --global http.proxy $HTTP_PROXY \
- && git config --global https.proxy $HTTPS_PROXY \
+ && apt-get install -y ruby-full build-essential \
  && gem install compass \
+ && apt-get autoremove -y ruby-full build-essential \
  && rm -rf /var/lib/apt/lists/*
 
 ADD . /src
