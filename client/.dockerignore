@@ -1,3 +1,4 @@
 Dockerfile
+nginx.conf
 package.json
 bower.json
