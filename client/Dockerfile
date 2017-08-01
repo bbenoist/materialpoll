@@ -27,6 +27,6 @@ RUN $(npm bin)/bower install --allow-root
 RUN npm install -g grunt
 RUN apt-get update -y \
  && apt-get install -y git ruby-full build-essential \
- && gem install compass
+ && gem install compass \
  && rm -rf /var/lib/apt/lists/*
 RUN grunt build
