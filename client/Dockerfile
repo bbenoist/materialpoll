@@ -34,7 +34,7 @@ RUN npm install -g grunt
 RUN apt-get update -y \
  && apt-get install -y ruby-full build-essential \
  && gem install compass \
- && apt-get autoremove -y ruby-full build-essential \
+ && apt-get autoremove -y build-essential \
  && rm -rf /var/lib/apt/lists/*
 
 # Loading "grunt-karma.js" tasks...ERROR
