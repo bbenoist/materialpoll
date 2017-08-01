@@ -16,10 +16,12 @@ RUN apt-get update -y \
 RUN npm config set proxy $HTTP_PROXY
 RUN npm config set https-proxy $HTTPS_PROXY
 
+ADD package.json /src
 RUN npm install
 
 # RUN npm install phantomjs jasmine-core jasmine karma grunt-karma grunt-contrib-compass
 
+ADD bower.json /src
 RUN $(npm bin)/bower install --allow-root
 
 RUN npm install -g grunt
@@ -29,4 +31,6 @@ RUN apt-get update -y \
  && git config --global https.proxy $HTTPS_PROXY \
  && gem install compass \
  && rm -rf /var/lib/apt/lists/*
+
+ADD . /src
 RUN grunt build
