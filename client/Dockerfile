@@ -19,7 +19,6 @@ RUN npm config set https-proxy $HTTPS_PROXY
 ADD package.json /src
 RUN npm install
 
-# RUN npm install phantomjs jasmine-core jasmine karma grunt-karma grunt-contrib-compass
 
 ADD bower.json /src
 
@@ -37,6 +36,10 @@ RUN apt-get update -y \
  && gem install compass \
  && apt-get autoremove -y ruby-full build-essential \
  && rm -rf /var/lib/apt/lists/*
+
+# Loading "grunt-karma.js" tasks...ERROR
+# >> Error: Cannot find module 'karma'
+RUN npm install phantomjs jasmine-core jasmine karma grunt-karma grunt-contrib-compass
 
 ADD . /src
 RUN grunt build
