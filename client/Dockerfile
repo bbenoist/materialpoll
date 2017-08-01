@@ -4,12 +4,7 @@ ADD nginx.conf /etc/nginx/conf.d/nginx.conf
 
 WORKDIR /src
 
-RUN echo "{\n  \"proxy\":\"$HTTP_PROXY\",\n  \"https-proxy\":\"$HTTPS_PROXY\",\n  \"directory\": \"bower_components\"\
-n}" > .bowerrc
-RUN git config --global http.proxy $HTTP_PROXY
-RUN git config --global https.proxy $HTTPS_PROXY
-RUN npm config set proxy $HTTP_PROXY
-RUN npm config set https-proxy $HTTPS_PROXY
+RUN echo "{\n  \"proxy\":\"$HTTP_PROXY\",\n  \"https-proxy\":\"$HTTPS_PROXY\",\n  \"directory\": \"bower_components\"\n}" > .bowerrc
 
 RUN apt-get update -y \
  && apt-get install -y curl gnupg \
@@ -17,6 +12,9 @@ RUN apt-get update -y \
  && apt-get install -y nodejs \
  && apt-get autoremove -y curl gnupg \
  && rm -rf /var/lib/apt/lists/*
+
+RUN npm config set proxy $HTTP_PROXY
+RUN npm config set https-proxy $HTTPS_PROXY
 
 RUN npm install
 
@@ -27,6 +25,8 @@ RUN $(npm bin)/bower install --allow-root
 RUN npm install -g grunt
 RUN apt-get update -y \
  && apt-get install -y git ruby-full build-essential \
+ && git config --global http.proxy $HTTP_PROXY
+ && git config --global https.proxy $HTTPS_PROXY
  && gem install compass \
  && rm -rf /var/lib/apt/lists/*
 RUN grunt build
