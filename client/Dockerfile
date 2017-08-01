@@ -25,8 +25,8 @@ RUN $(npm bin)/bower install --allow-root
 RUN npm install -g grunt
 RUN apt-get update -y \
  && apt-get install -y git ruby-full build-essential \
- && git config --global http.proxy $HTTP_PROXY
- && git config --global https.proxy $HTTPS_PROXY
+ && git config --global http.proxy $HTTP_PROXY \
+ && git config --global https.proxy $HTTPS_PROXY \
  && gem install compass \
  && rm -rf /var/lib/apt/lists/*
 RUN grunt build
